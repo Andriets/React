@@ -42,7 +42,7 @@ class MyItem extends React.Component {
   }
 }
 
-function App() {
+export default function App() {
   return (
     <div className="App">
       <MyItem data={me} />
