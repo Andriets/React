@@ -14,18 +14,6 @@ function Image(props) {
   return <img width="300px" src={props.src} alt="" />;
 }
 
-// function MyItem(props) {
-//   // console.log(props);
-//   const { data : {name , age, image} } = props;
-//   return (
-//     <div>
-//       <h1>{name}</h1>
-//       <h2>{age} y.o.</h2>
-//       <Image src={image}/>
-//     </div>
-//   );
-// }
-
 class MyItem extends React.Component {
   constructor() {
     super();
