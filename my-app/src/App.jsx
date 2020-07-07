@@ -30,12 +30,21 @@ class App extends React.Component {
   render() {
     return (
       <div className={"container"}>
-        {this.state.people.map(person => {
-        	return <MyItem 
-        			key={person.id} 
-        			person={person} 
-        			removePerson={this.removePerson}/>;
-        })}
+        <div className={"row"}>
+          <div className={"col-9"}>
+            <div className={"row"}>
+                      {this.state.people.map(person => {
+                      	return (
+                          <div className={"col-6 mb-4"} key={person.id}>
+                               <MyItem 
+                            			person={person} 
+                            			removePerson={this.removePerson}/>
+                          </div>
+                          );
+                      })}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

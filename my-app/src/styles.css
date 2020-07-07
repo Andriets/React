@@ -3,11 +3,6 @@
   text-align: center;
 }
 
-.container {
-  margin: 0 auto;
-  width: 300px;
-}
-
 .btns {
   display: flex;
   justify-content: space-between;
@@ -16,4 +11,8 @@
 .btn-like {
   background: lightseagreen;
   color: white;
+}
+
+.h-500 {
+	height: 500px;
 }
