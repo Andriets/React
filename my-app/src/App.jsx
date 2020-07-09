@@ -14,6 +14,7 @@ class App extends React.Component {
 
     this.state = {
       people: peopleData,
+      likes: []
     };
   }
 
@@ -25,7 +26,31 @@ class App extends React.Component {
   	this.setState({
   		people: updatePeople
   	});
-  }
+  };
+
+  
+
+  addPersonToLikes = person => {
+  	// const updateLikes = [...this.state.likes];
+  	// updateLikes.push(person);
+
+  	const updateLikes = [...this.state.likes, person];
+
+  	this.setState({
+  		likes: updateLikes
+  	});
+  };
+
+  removePersonFromLikes = person => {
+  	const updatePeopleLikes = this.state.likes.filter(function(item){
+  		return item.id !== person.id;
+  	});
+
+  	this.setState({
+  		likes: updatePeopleLikes
+  	});
+  };
+
 
   render() {
     return (
@@ -38,12 +63,17 @@ class App extends React.Component {
                           <div className={"col-6 mb-4"} key={person.id}>
                                <MyItem 
                             			person={person} 
-                            			removePerson={this.removePerson}/>
+                            			removePerson={this.removePerson}
+                            			addPersonToLikes={this.addPersonToLikes}
+                            			removePersonFromLikes={this.removePersonFromLikes}/>
                           </div>
                           );
                       })}
             </div>
           </div>
+          <div className={"col-3"}> 
+          	<p>Likes: {this.state.likes.length}</p>
+          </div> 
         </div>
       </div>
     );
