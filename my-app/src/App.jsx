@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./styles.css";
-import peopleData from "./people.js"
 import MyItem from "./components/MyItem"
+import MovieTabs from "./components/MovieTabs"
 
 function Image(props) {
   return <img width="300px" src={props.src} alt="" />;
@@ -13,41 +13,69 @@ class App extends React.Component {
     super();
 
     this.state = {
-      people: peopleData,
-      likes: []
+      movies: [],
+      moviesWillWatch: [],
+      sort_by: "popularity.desc"
     };
   }
 
-  removePerson = person => {
-  	const updatePeople = this.state.people.filter(function(item){
-  		return item.id !== person.id;
+  getMovies = () => {
+  	fetch(`https://api.themoviedb.org/3/discover/movie?api_key=6fd9b47c59d1c29c0ddefbe5cec4650e&sort_by=${this.state.sort_by}`)
+  	.then(response => {
+  		return response.json();
+  	}).then( data => {
+  		this.setState({
+  			movies: data.results
+  		});
+  	});
+  };
+
+  componentDidMount() {
+  	this.getMovies();
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+  	if (prevState.sort_by !== this.state.sort_by) {
+  		this.getMovies();
+  	}
+  };
+
+  deleteMovie = movie => {
+  	const updateMovies = this.state.movies.filter(function(item){
+  		return item.id !== movie.id;
   	});
 
   	this.setState({
-  		people: updatePeople
+  		movies: updateMovies
   	});
   };
 
   
 
-  addPersonToLikes = person => {
-  	// const updateLikes = [...this.state.likes];
-  	// updateLikes.push(person);
+  addMovieToWillWatch = movie => {
+  	// const updateMoviesWillWatch = [...this.state.moviesWillWatch];
+   //  updateMoviesWillWatch.push(movie);
 
-  	const updateLikes = [...this.state.likes, person];
+  	const updateMoviesWillWatch = [...this.state.moviesWillWatch, movie];
 
   	this.setState({
-  		likes: updateLikes
+  		moviesWillWatch: updateMoviesWillWatch
   	});
   };
 
-  removePersonFromLikes = person => {
-  	const updatePeopleLikes = this.state.likes.filter(function(item){
-  		return item.id !== person.id;
+  deleteMovieFromWillWatch = movie => {
+  	const updateMoviesWillWatch = this.state.moviesWillWatch.filter(function(item){
+  		return item.id !== movie.id;
   	});
 
   	this.setState({
-  		likes: updatePeopleLikes
+  		moviesWillWatch: updateMoviesWillWatch
+  	});
+  };
+
+  updateSortBy = value => {
+  	this.setState({
+  		sort_by: value
   	});
   };
 
@@ -55,24 +83,31 @@ class App extends React.Component {
   render() {
     return (
       <div className={"container"}>
-        <div className={"row"}>
+        <div className={"row mt-4"}>
           <div className={"col-9"}>
+            <div className="row mb-4">
+            	<div className="col-12">
+            		<MovieTabs 
+            			sort_by={this.state.sort_by}
+            			updateSortBy={this.updateSortBy}/>
+            	</div>
+            </div>
             <div className={"row"}>
-                      {this.state.people.map(person => {
+                      {this.state.movies.map(movie => {
                       	return (
-                          <div className={"col-6 mb-4"} key={person.id}>
+                          <div className={"col-6 mb-4"} key={movie.id}>
                                <MyItem 
-                            			person={person} 
-                            			removePerson={this.removePerson}
-                            			addPersonToLikes={this.addPersonToLikes}
-                            			removePersonFromLikes={this.removePersonFromLikes}/>
+                            			movie={movie} 
+                            			deleteMovie={this.deleteMovie}
+                            			addMovieToWillWatch={this.addMovieToWillWatch}
+                            			deleteMovieFromWillWatch={this.deleteMovieFromWillWatch}/>
                           </div>
                           );
                       })}
             </div>
           </div>
           <div className={"col-3"}> 
-          	<p>Likes: {this.state.likes.length}</p>
+          	<p>Will Watch: {this.state.moviesWillWatch.length}</p>
           </div> 
         </div>
       </div>
@@ -80,13 +115,6 @@ class App extends React.Component {
   }
 }
 
-// export default function App() {
-//   return (
-//     <div className="App">
-//       <MyItem />
-//     </div>
-//   );
-// }
 export default App
 
 ReactDOM.render(<App />, document.getElementById("root"));

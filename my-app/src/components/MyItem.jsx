@@ -5,40 +5,40 @@ class MyItem extends React.Component {
 		super();
 
 		this.state = {
-			like: false
+			willWatch: false
 		};
 	}
 
 	render() {
-	const {person, removePerson, addPersonToLikes, removePersonFromLikes} = this.props;
+	const {movie, deleteMovie, addMovieToWillWatch, deleteMovieFromWillWatch} = this.props;
 		return (
 			<div className="card">
 				<img 
-					className="card-img-top h-500"
-					src={person.photo}
+					className="card-img-top"
+					src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path || movie.poster_path}`}
 					alt=""
 				/>
 				<div className="card-body">
-					<h6 className="card-title">{person.name}</h6>
+					<h6 className="card-title">{movie.title}</h6>	
 	       			<div className="d-flex justify-content-between align-item-center">
-
+	       				<p className="mb-0">Rating: {movie.vote_average}</p>
 		       			<button 
 		       				type="button" 
-		       				onClick={removePerson.bind(null, person)}>
-		       			  		Delete person
+		       				onClick={deleteMovie.bind(null, movie)}>
+		       			  		Delete movie
 		       			</button>
 		       			<button 
 		       				type="button" 
-		       				className={this.state.like ? "btn btn-success" : "btn btn-secondary"}
+		       				className={this.state.willWatch ? "btn btn-success" : "btn btn-secondary"}
 		       				onClick={ () => {
 			       					this.setState({
-			       						like: !this.state.like
+			       						willWatch: !this.state.willWatch
 			       					});
 
-			       					this.state.like ? removePersonFromLikes(person) : addPersonToLikes(person)
+			       					this.state.willWatch ? deleteMovieFromWillWatch(movie) : addMovieToWillWatch(movie)
 		       					}
 		       				}>
-		       			  		Like
+		       			  		Will Watch
 		       			</button>
 		       		</div>
 		       	</div>
@@ -47,37 +47,5 @@ class MyItem extends React.Component {
 	}
 
 }
-
-
-
-// const MyItem = props => {
-
-// 	// cosnt { person, removePerson, addPersonToLikes } = props;
-// 	return (
-// 			<div className="card">
-// 				<img 
-// 					className="card-img-top h-500"
-// 					src={props.person.photo}
-// 					alt=""
-// 				/>
-// 				<div className="card-body">
-// 					<h6 className="card-title">{props.person.name}</h6>
-// 	       			<div className="d-flex justify-content-between align-item-center">
-
-// 		       			<button 
-// 		       				type="button" 
-// 		       				onClick={props.removePerson.bind(null, props.person)}>
-// 		       			  		Delete person
-// 		       			</button>
-// 		       			<button 
-// 		       				type="button" 
-// 		       				onClick={props.addPersonToLikes.bind(null, props.person)}>
-// 		       			  		Like
-// 		       			</button>
-// 		       		</div>
-// 		       	</div>
-//        		</div>
-// 		);
-// };
 
 export default MyItem
