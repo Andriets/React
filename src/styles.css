@@ -3,11 +3,6 @@
   text-align: center;
 }
 
-.container {
-  margin: 0 auto;
-  width: 300px;
-}
-
 .btns {
   display: flex;
   justify-content: space-between;
@@ -17,3 +12,45 @@
   background: lightseagreen;
   color: white;
 }
+
+.h-500 {
+	height: 500px;
+}
+
+.pagination {
+	max-width: 300px;
+	display: flex;
+	justify-content: space-between;
+	margin: 0 auto;
+	margin-bottom: 40px;
+}
+
+.pagination-item {
+  position: relative;
+  display: inline-block;
+  width: auto;
+  height: auto;
+  /*line-height: 2em;*/
+  vertical-align: middle;
+  text-align: center;
+  text-decoration: none;
+  color: #000;
+  outline: none;
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px #ddd inset, 0 1px 1px #fff;
+}
+
+.currPage {
+	background: #5462DB;
+}
+
+.pagination-item:hover {
+  background: #dcdcdc linear-gradient(#fff, #dcdcdc);
+  box-shadow: 0 0 0 1px #aaa inset, 0 1px 1px #aaa;
+}
+
+.pagination-item:active, .pagination-item:focus {
+	background: none;
+    box-shadow: 0 0 0 1px #bbb inset, 0 1px 3px rgba(0,0,0,.5) inset, 0 1px 2px #fff;
+}
+
